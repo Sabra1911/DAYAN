@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Profesora 🌱</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
-
 <body>
 
     <!-- Animación de hojas -->
@@ -32,7 +30,7 @@
                 🌱 Proyectos
             </div>
             <div class="nav-item" onclick="showSection('activities', this)">
-                🧪 Actividades
+                🧪 Registro de Clases
             </div>
             <div class="nav-item" onclick="showSection('students', this)">
                 👨‍🎓 Estudiantes
@@ -45,23 +43,17 @@
 
     <!-- Main Content -->
     <main class="main-content">
-
+        
         <!-- MODULE 1: PLANEADOR -->
         <section id="planner" class="section active">
             <h2 class="section-title">📚 Planeador de Clases</h2>
-
+            
             <div class="card">
                 <form id="planner-form">
                     <div class="grid-2">
                         <div class="form-group">
-                            <label>Materia</label>
-                            <input type="text" id="plan-materia" class="form-control" required
-                                placeholder="Ej: Ciencias Naturales">
-                        </div>
-                        <div class="form-group">
-                            <label>Tema</label>
-                            <input type="text" id="plan-tema" class="form-control" required
-                                placeholder="Ej: Fotosíntesis">
+                            <label>Tema de la clase</label>
+                            <input type="text" id="plan-tema" class="form-control" required placeholder="Ej: Ecosistemas locales">
                         </div>
                         <div class="form-group">
                             <label>Tipo de clase</label>
@@ -69,26 +61,22 @@
                                 <option value="Teórica">Teórica</option>
                                 <option value="Práctica">Práctica</option>
                                 <option value="Experimento">Experimento</option>
-                                <option value="Salida de campo">Salida de campo</option>
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Objetivo de aprendizaje</label>
-                            <input type="text" id="plan-objetivo" class="form-control" required
-                                placeholder="¿Qué deben aprender hoy?">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Materiales</label>
-                        <input type="text" id="plan-materiales" class="form-control"
-                            placeholder="Ej: Proyector, hojas secas, lupas...">
+                        <label>Objetivo de aprendizaje</label>
+                        <input type="text" id="plan-objetivo" class="form-control" required placeholder="¿Qué lograrán los estudiantes hoy?">
+                    </div>
+                    <div class="form-group">
+                        <label>Materiales necesarios</label>
+                        <input type="text" id="plan-materiales" class="form-control" placeholder="Ej: Lupa, hojas de trabajo, proyector...">
                     </div>
                     <div class="form-group">
                         <label>Actividad a realizar</label>
-                        <textarea id="plan-actividad" class="form-control" required
-                            placeholder="Describe paso a paso la clase..."></textarea>
+                        <textarea id="plan-actividad" class="form-control" required placeholder="Paso a paso de lo que se hará en la sesión..."></textarea>
                     </div>
-                    <button type="submit" class="btn">✨ Guardar Clase</button>
+                    <button type="submit" class="btn">✨ Guardar Planeación</button>
                 </form>
             </div>
 
@@ -98,34 +86,33 @@
         <!-- MODULE 2: PROYECTOS -->
         <section id="projects" class="section">
             <h2 class="section-title">🌱 Proyectos Ambientales</h2>
-
+            
             <div class="card">
                 <form id="project-form">
                     <div class="form-group">
                         <label>Nombre del Proyecto</label>
-                        <input type="text" id="proj-nombre" class="form-control" required
-                            placeholder="Ej: Huerta Escolar">
-                    </div>
-                    <div class="form-group">
-                        <label>Descripción</label>
-                        <textarea id="proj-desc" class="form-control" required
-                            placeholder="Propósito del proyecto..."></textarea>
+                        <input type="text" id="proj-nombre" class="form-control" required placeholder="Ej: Creación de huerta escolar">
                     </div>
                     <div class="grid-2">
                         <div class="form-group">
-                            <label>Etapa / Progreso</label>
-                            <input type="text" id="proj-etapa" class="form-control" required
-                                placeholder="Ej: Preparación de tierra">
+                            <label>Etapas (Plan)</label>
+                            <input type="text" id="proj-etapas" class="form-control" required placeholder="Ej: 1. Semillas, 2. Abono, 3. Riego">
                         </div>
                         <div class="form-group">
-                            <label>Estado</label>
-                            <select id="proj-estado" class="form-control">
-                                <option value="En progreso">En progreso 🏃‍♀️</option>
+                            <label>Avance Actual</label>
+                            <select id="proj-avance" class="form-control">
+                                <option value="Iniciando">Iniciando 🌱</option>
+                                <option value="En progreso">En progreso 🌿</option>
+                                <option value="Avanzado">Avanzado 🌳</option>
                                 <option value="Finalizado">Finalizado ✅</option>
                             </select>
                         </div>
                     </div>
-                    <button type="submit" class="btn">🌱 Crear Proyecto</button>
+                    <div class="form-group">
+                        <label>Notas / Observaciones</label>
+                        <textarea id="proj-notas" class="form-control" placeholder="Ideas o recursos que faltan..."></textarea>
+                    </div>
+                    <button type="submit" class="btn">🌱 Guardar Proyecto</button>
                 </form>
             </div>
 
@@ -134,33 +121,29 @@
 
         <!-- MODULE 3: ACTIVIDADES -->
         <section id="activities" class="section">
-            <h2 class="section-title">🧪 Actividades y Experimentos</h2>
-
+            <h2 class="section-title">🧪 Registro de Clases / Experimentos</h2>
+            
             <div class="card">
                 <form id="activity-form">
                     <div class="form-group">
-                        <label>Nombre de la Actividad / Experimento</label>
-                        <input type="text" id="act-nombre" class="form-control" required
-                            placeholder="Ej: Volcán de bicarbonato">
+                        <label>Nombre de la Clase / Experimento</label>
+                        <input type="text" id="act-nombre" class="form-control" required placeholder="Ej: Laboratorio de densidad">
                     </div>
                     <div class="form-group">
-                        <label>Materiales Utilizados</label>
-                        <textarea id="act-materiales" class="form-control" required
-                            placeholder="Vinagre, bicarbonato, colorante..."></textarea>
+                        <label>¿Qué se hizo en clase?</label>
+                        <textarea id="act-hizo" class="form-control" required placeholder="Breve resumen de cómo se desarrolló..."></textarea>
                     </div>
                     <div class="grid-2">
                         <div class="form-group">
-                            <label>Resultado Esperado</label>
-                            <textarea id="act-esperado" class="form-control" required
-                                placeholder="Erupción química..."></textarea>
+                            <label>¿Qué funcionó bien? 👍</label>
+                            <textarea id="act-funciono" class="form-control" placeholder="Ej: Los niños participaron mucho en..."></textarea>
                         </div>
                         <div class="form-group">
-                            <label>Observaciones Reales (Después de clase)</label>
-                            <textarea id="act-real" class="form-control"
-                                placeholder="¿Cómo salió todo en la práctica?"></textarea>
+                            <label>¿Qué mejorar para la próxima? 💡</label>
+                            <textarea id="act-mejorar" class="form-control" placeholder="Ej: Explicar mejor las instrucciones de seguridad..."></textarea>
                         </div>
                     </div>
-                    <button type="submit" class="btn">🧪 Registrar Experimento</button>
+                    <button type="submit" class="btn">🧪 Guardar Registro</button>
                 </form>
             </div>
 
@@ -170,17 +153,16 @@
         <!-- MODULE 4: ESTUDIANTES -->
         <section id="students" class="section">
             <h2 class="section-title">👨‍🎓 Observaciones de Estudiantes</h2>
-
+            
             <div class="card">
                 <form id="student-form">
                     <div class="form-group">
                         <label>Nombre del Estudiante</label>
-                        <input type="text" id="stu-nombre" class="form-control" required placeholder="Nombre completo">
+                        <input type="text" id="stu-nombre" class="form-control" required placeholder="Nombre del alumno">
                     </div>
                     <div class="form-group">
-                        <label>Comentario u Observación</label>
-                        <textarea id="stu-obs" class="form-control" required
-                            placeholder="Fortalezas, áreas de mejora, participación..."></textarea>
+                        <label>Comentario Rápido</label>
+                        <textarea id="stu-obs" class="form-control" required placeholder="Ej: Mostró mucho interés en el experimento de hoy..."></textarea>
                     </div>
                     <button type="submit" class="btn">✍️ Guardar Observación</button>
                 </form>
@@ -193,8 +175,7 @@
         <section id="notes" class="section">
             <h2 class="section-title">📝 Notas Rápidas</h2>
             <div class="card" style="padding: 0; overflow: hidden; border: none;">
-                <textarea id="quick-notes" class="form-control"
-                    placeholder="Escribe aquí tus ideas, recordatorios rápidos o cosas por hacer... Todo se guarda automáticamente."></textarea>
+                <textarea id="quick-notes" class="form-control" placeholder="Escribe aquí ideas para clases, actividades futuras o cosas que no quieres olvidar... (Se guarda automáticamente)"></textarea>
             </div>
         </section>
 
@@ -227,5 +208,4 @@
     <!-- Scripts -->
     <script src="js/app.js"></script>
 </body>
-
 </html>

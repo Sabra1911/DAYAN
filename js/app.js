@@ -24,11 +24,11 @@ document.addEventListener('DOMContentLoaded', () => {
 function showSection(id, element) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-
+    
     document.getElementById(id).classList.add('active');
     element.classList.add('active');
 
-    if (window.innerWidth <= 768) {
+    if(window.innerWidth <= 768) {
         toggleMenu();
     }
 }
@@ -44,12 +44,12 @@ function showToast(message, icon = "✨") {
     const toast = document.createElement('div');
     toast.className = 'toast';
     toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
-
+    
     container.appendChild(toast);
-
+    
     // Trigger animation
     setTimeout(() => toast.classList.add('show'), 10);
-
+    
     // Remove
     setTimeout(() => {
         toast.classList.remove('show');
@@ -72,7 +72,6 @@ document.getElementById('planner-form').addEventListener('submit', (e) => {
     e.preventDefault();
     const newItem = {
         id: Date.now(),
-        materia: document.getElementById('plan-materia').value,
         tema: document.getElementById('plan-tema').value,
         tipo: document.getElementById('plan-tipo').value,
         objetivo: document.getElementById('plan-objetivo').value,
@@ -96,8 +95,8 @@ function renderPlanner() {
             <div class="item-card">
                 <span class="item-badge">${item.tipo}</span>
                 <h3>${item.tema}</h3>
-                <p><strong>Materia:</strong> ${item.materia}</p>
                 <p><strong>Objetivo:</strong> ${item.objetivo}</p>
+                ${item.materiales ? `<p><strong>Materiales:</strong> ${item.materiales}</p>` : ''}
                 <p><strong>Actividad:</strong> ${item.actividad}</p>
                 <div class="item-actions">
                     <button class="btn btn-danger" onclick="deleteItem('planner', ${item.id})">Eliminar</button>
@@ -113,9 +112,9 @@ document.getElementById('project-form').addEventListener('submit', (e) => {
     const newItem = {
         id: Date.now(),
         nombre: document.getElementById('proj-nombre').value,
-        desc: document.getElementById('proj-desc').value,
-        etapa: document.getElementById('proj-etapa').value,
-        estado: document.getElementById('proj-estado').value
+        etapas: document.getElementById('proj-etapas').value,
+        avance: document.getElementById('proj-avance').value,
+        notas: document.getElementById('proj-notas').value
     };
     state.projects.unshift(newItem);
     saveData('projects');
@@ -128,29 +127,19 @@ function renderProjects() {
     const list = document.getElementById('projects-list');
     list.innerHTML = '';
     state.projects.forEach(item => {
-        const isDone = item.estado === 'Finalizado';
+        const isDone = item.avance === 'Finalizado';
         list.innerHTML += `
             <div class="item-card ${isDone ? 'project-done' : ''}">
-                <span class="item-badge" style="background:${isDone ? '#e5e7eb' : '#bbf7d0'}">${item.estado}</span>
+                <span class="item-badge" style="background:${isDone?'#e5e7eb':'#e6f2eb'}">${item.avance}</span>
                 <h3>${item.nombre}</h3>
-                <p>${item.desc}</p>
-                <p><strong>Etapa actual:</strong> ${item.etapa}</p>
+                <p><strong>Etapas:</strong> ${item.etapas}</p>
+                ${item.notas ? `<p><strong>Notas:</strong> ${item.notas}</p>` : ''}
                 <div class="item-actions">
-                    <button class="btn btn-outline" onclick="toggleProjectState(${item.id})">Cambiar Estado</button>
                     <button class="btn btn-danger" onclick="deleteItem('projects', ${item.id})">Eliminar</button>
                 </div>
             </div>
         `;
     });
-}
-
-function toggleProjectState(id) {
-    const proj = state.projects.find(p => p.id === id);
-    if (proj) {
-        proj.estado = proj.estado === 'En progreso' ? 'Finalizado' : 'En progreso';
-        saveData('projects');
-        renderProjects();
-    }
 }
 
 // --- MODULE 3: ACTIVITIES ---
@@ -159,15 +148,15 @@ document.getElementById('activity-form').addEventListener('submit', (e) => {
     const newItem = {
         id: Date.now(),
         nombre: document.getElementById('act-nombre').value,
-        materiales: document.getElementById('act-materiales').value,
-        esperado: document.getElementById('act-esperado').value,
-        real: document.getElementById('act-real').value
+        hizo: document.getElementById('act-hizo').value,
+        funciono: document.getElementById('act-funciono').value,
+        mejorar: document.getElementById('act-mejorar').value
     };
     state.activities.unshift(newItem);
     saveData('activities');
     renderActivities();
     e.target.reset();
-    showToast("Experimento guardado", "🧪");
+    showToast("Registro guardado", "🧪");
 });
 
 function renderActivities() {
@@ -177,9 +166,9 @@ function renderActivities() {
         list.innerHTML += `
             <div class="item-card">
                 <h3>${item.nombre}</h3>
-                <p><strong>Materiales:</strong> ${item.materiales}</p>
-                <p><strong>Resultado Esperado:</strong> ${item.esperado}</p>
-                ${item.real ? `<p><strong>Observación Real:</strong> ${item.real}</p>` : ''}
+                <p><strong>Qué se hizo:</strong> ${item.hizo}</p>
+                ${item.funciono ? `<p><strong>👍 Funcionó:</strong> ${item.funciono}</p>` : ''}
+                ${item.mejorar ? `<p><strong>💡 Por mejorar:</strong> ${item.mejorar}</p>` : ''}
                 <div class="item-actions">
                     <button class="btn btn-danger" onclick="deleteItem('activities', ${item.id})">Eliminar</button>
                 </div>
@@ -225,7 +214,7 @@ function renderStudents() {
 function initNotes() {
     const notesEl = document.getElementById('quick-notes');
     notesEl.value = localStorage.getItem('teach_notes') || '';
-
+    
     notesEl.addEventListener('input', () => {
         localStorage.setItem('teach_notes', notesEl.value);
     });
@@ -233,14 +222,14 @@ function initNotes() {
 
 // Generic Delete
 function deleteItem(type, id) {
-    if (confirm('¿Seguro que deseas eliminar este elemento?')) {
+    if(confirm('¿Seguro que deseas eliminar este elemento?')) {
         state[type] = state[type].filter(item => item.id !== id);
         saveData(type);
-
-        if (type === 'planner') renderPlanner();
-        if (type === 'projects') renderProjects();
-        if (type === 'activities') renderActivities();
-        if (type === 'students') renderStudents();
+        
+        if(type==='planner') renderPlanner();
+        if(type==='projects') renderProjects();
+        if(type==='activities') renderActivities();
+        if(type==='students') renderStudents();
     }
 }
 
@@ -272,19 +261,19 @@ function closeSecret() {
 function createLeaves() {
     const container = document.getElementById('leaves-container');
     const leafTypes = ['🌿', '🍃', '🌱', '🍂'];
-
-    for (let i = 0; i < 15; i++) {
+    
+    for(let i=0; i<15; i++) {
         const leaf = document.createElement('div');
         leaf.className = 'leaf';
         leaf.textContent = leafTypes[Math.floor(Math.random() * leafTypes.length)];
-
+        
         // Random properties
         leaf.style.left = `${Math.random() * 100}vw`;
         leaf.style.animationDuration = `${Math.random() * 10 + 10}s`;
         leaf.style.animationDelay = `${Math.random() * 5}s`;
         leaf.style.opacity = Math.random() * 0.2 + 0.1;
         leaf.style.fontSize = `${Math.random() * 1 + 1}rem`;
-
+        
         container.appendChild(leaf);
     }
 }
