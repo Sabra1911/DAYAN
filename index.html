@@ -4,257 +4,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Ciencias y Ambiente 🌱</title>
-    <!-- Tipografías -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@1,600&display=swap"
-        rel="stylesheet">
-    <!-- Estilos -->
+    <title>Panel de Profesora 🌱</title>
     <link rel="stylesheet" href="css/styles.css">
-    <!-- Scripts -->
-    <script src="js/app.js" defer></script>
 </head>
 
 <body>
 
-    <!-- Animaciones Naturales -->
-    <div class="hearts-container" id="hearts-container"></div>
+    <!-- Animación de hojas -->
+    <div id="leaves-container"></div>
 
-    <!-- Botón y Modal Secreto -->
-    <button class="secret-btn" id="secret-btn">?</button>
+    <!-- Mobile toggle -->
+    <button class="menu-toggle" onclick="toggleMenu()">☰ Menú</button>
+    <div class="overlay-mobile" id="mobile-overlay" onclick="toggleMenu()"></div>
 
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="header">
+            <h1>Panel de Profesora</h1>
+            <p>Organiza, enseña y deja huella 🌱</p>
+            <span class="small-msg">Para la mejor profesora ❤️</span>
+        </div>
+        <nav class="nav">
+            <div class="nav-item active" onclick="showSection('planner', this)">
+                📚 Planeador
+            </div>
+            <div class="nav-item" onclick="showSection('projects', this)">
+                🌱 Proyectos
+            </div>
+            <div class="nav-item" onclick="showSection('activities', this)">
+                🧪 Actividades
+            </div>
+            <div class="nav-item" onclick="showSection('students', this)">
+                👨‍🎓 Estudiantes
+            </div>
+            <div class="nav-item" onclick="showSection('notes', this)">
+                📝 Notas
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- MODULE 1: PLANEADOR -->
+        <section id="planner" class="section active">
+            <h2 class="section-title">📚 Planeador de Clases</h2>
+
+            <div class="card">
+                <form id="planner-form">
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Materia</label>
+                            <input type="text" id="plan-materia" class="form-control" required
+                                placeholder="Ej: Ciencias Naturales">
+                        </div>
+                        <div class="form-group">
+                            <label>Tema</label>
+                            <input type="text" id="plan-tema" class="form-control" required
+                                placeholder="Ej: Fotosíntesis">
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo de clase</label>
+                            <select id="plan-tipo" class="form-control" required>
+                                <option value="Teórica">Teórica</option>
+                                <option value="Práctica">Práctica</option>
+                                <option value="Experimento">Experimento</option>
+                                <option value="Salida de campo">Salida de campo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Objetivo de aprendizaje</label>
+                            <input type="text" id="plan-objetivo" class="form-control" required
+                                placeholder="¿Qué deben aprender hoy?">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Materiales</label>
+                        <input type="text" id="plan-materiales" class="form-control"
+                            placeholder="Ej: Proyector, hojas secas, lupas...">
+                    </div>
+                    <div class="form-group">
+                        <label>Actividad a realizar</label>
+                        <textarea id="plan-actividad" class="form-control" required
+                            placeholder="Describe paso a paso la clase..."></textarea>
+                    </div>
+                    <button type="submit" class="btn">✨ Guardar Clase</button>
+                </form>
+            </div>
+
+            <div id="planner-list" class="item-list"></div>
+        </section>
+
+        <!-- MODULE 2: PROYECTOS -->
+        <section id="projects" class="section">
+            <h2 class="section-title">🌱 Proyectos Ambientales</h2>
+
+            <div class="card">
+                <form id="project-form">
+                    <div class="form-group">
+                        <label>Nombre del Proyecto</label>
+                        <input type="text" id="proj-nombre" class="form-control" required
+                            placeholder="Ej: Huerta Escolar">
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <textarea id="proj-desc" class="form-control" required
+                            placeholder="Propósito del proyecto..."></textarea>
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Etapa / Progreso</label>
+                            <input type="text" id="proj-etapa" class="form-control" required
+                                placeholder="Ej: Preparación de tierra">
+                        </div>
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select id="proj-estado" class="form-control">
+                                <option value="En progreso">En progreso 🏃‍♀️</option>
+                                <option value="Finalizado">Finalizado ✅</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn">🌱 Crear Proyecto</button>
+                </form>
+            </div>
+
+            <div id="projects-list" class="item-list"></div>
+        </section>
+
+        <!-- MODULE 3: ACTIVIDADES -->
+        <section id="activities" class="section">
+            <h2 class="section-title">🧪 Actividades y Experimentos</h2>
+
+            <div class="card">
+                <form id="activity-form">
+                    <div class="form-group">
+                        <label>Nombre de la Actividad / Experimento</label>
+                        <input type="text" id="act-nombre" class="form-control" required
+                            placeholder="Ej: Volcán de bicarbonato">
+                    </div>
+                    <div class="form-group">
+                        <label>Materiales Utilizados</label>
+                        <textarea id="act-materiales" class="form-control" required
+                            placeholder="Vinagre, bicarbonato, colorante..."></textarea>
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Resultado Esperado</label>
+                            <textarea id="act-esperado" class="form-control" required
+                                placeholder="Erupción química..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Observaciones Reales (Después de clase)</label>
+                            <textarea id="act-real" class="form-control"
+                                placeholder="¿Cómo salió todo en la práctica?"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn">🧪 Registrar Experimento</button>
+                </form>
+            </div>
+
+            <div id="activities-list" class="item-list"></div>
+        </section>
+
+        <!-- MODULE 4: ESTUDIANTES -->
+        <section id="students" class="section">
+            <h2 class="section-title">👨‍🎓 Observaciones de Estudiantes</h2>
+
+            <div class="card">
+                <form id="student-form">
+                    <div class="form-group">
+                        <label>Nombre del Estudiante</label>
+                        <input type="text" id="stu-nombre" class="form-control" required placeholder="Nombre completo">
+                    </div>
+                    <div class="form-group">
+                        <label>Comentario u Observación</label>
+                        <textarea id="stu-obs" class="form-control" required
+                            placeholder="Fortalezas, áreas de mejora, participación..."></textarea>
+                    </div>
+                    <button type="submit" class="btn">✍️ Guardar Observación</button>
+                </form>
+            </div>
+
+            <div id="students-list" class="item-list"></div>
+        </section>
+
+        <!-- MODULE 5: NOTAS -->
+        <section id="notes" class="section">
+            <h2 class="section-title">📝 Notas Rápidas</h2>
+            <div class="card" style="padding: 0; overflow: hidden; border: none;">
+                <textarea id="quick-notes" class="form-control"
+                    placeholder="Escribe aquí tus ideas, recordatorios rápidos o cosas por hacer... Todo se guarda automáticamente."></textarea>
+            </div>
+        </section>
+
+        <footer class="footer">
+            "Enseñar es sembrar conocimiento para transformar el mundo 🌎"
+        </footer>
+    </main>
+
+    <!-- Toasts -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Secret Button -->
+    <button class="secret-btn" onclick="openSecret()">🌿</button>
+
+    <!-- Secret Modal -->
     <div class="modal-overlay" id="secret-modal">
-        <div class="modal-content">
-            <span class="modal-close" id="close-modal">&times;</span>
-            <p class="love-message">
-                <span>Feliz Día, mi amor ❤️</span>
-                Admiro lo increíble que eres enseñando,<br>
-                pero más lo que eres como persona.<br>
-                Eres mi proyecto favorito.<br>
-                Te amo mucho.
+        <div class="modal">
+            <h2>Feliz Día del Profesor, cachetona ❤️</h2>
+            <p>
+                Admiro tu pasión por enseñar,<br>
+                tu forma de inspirar y cuidar el mundo.<br>
+                Eres increíble en lo que haces…<br>
+                y aún más como persona.
             </p>
+            <p style="font-weight: 600; font-style: italic; color: #be123c;">Te amo.</p>
+            <button class="close-modal" onclick="closeSecret()">Cerrar</button>
         </div>
     </div>
 
-    <!-- App -->
-    <div class="app-container">
-
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="brand">
-                <h1>Ciencias y Ambiente</h1>
-                <p>Naturaleza y Educación 🌱</p>
-                <div class="brand-badge">Para la mejor profesora ❤️</div>
-            </div>
-
-            <nav class="nav-menu">
-                <button class="nav-item active" data-target="planificador">📖 Planificador</button>
-                <button class="nav-item" data-target="proyectos">🌍 Proyectos</button>
-                <button class="nav-item" data-target="experimentos">🔬 Experimentos</button>
-                <button class="nav-item" data-target="horario">⏰ Horario</button>
-                <button class="nav-item" data-target="estudiantes">👥 Estudiantes</button>
-                <button class="nav-item" data-target="respaldo">💾 Respaldo</button>
-            </nav>
-        </aside>
-
-        <!-- Main -->
-        <main class="main-content">
-
-            <!-- PLANIFICADOR -->
-            <section id="planificador" class="module active">
-                <div class="card">
-                    <h2 class="section-title">📖 Planificador de Clases</h2>
-                    <form id="form-planificador">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Materia</label>
-                                <input type="text" id="plan-mat" placeholder="Ej. Biología" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Tema</label>
-                                <input type="text" id="plan-tema" placeholder="Ej. Fotosíntesis" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Tipo de Clase</label>
-                                <select id="plan-tipo">
-                                    <option value="teorico">Teórico</option>
-                                    <option value="practico">Práctico</option>
-                                    <option value="experimento">Experimento</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Materiales Necesarios</label>
-                                <input type="text" id="plan-mat-req" placeholder="Ej. Proyector, hojas secas...">
-                            </div>
-                            <div class="form-group">
-                                <label>Objetivo de Aprendizaje</label>
-                                <input type="text" id="plan-obj" placeholder="Ej. Comprender el ciclo del oxígeno"
-                                    required>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn">✨ Guardar Clase</button>
-                    </form>
-
-                    <div id="msg-plan" class="success-msg">¡Guardado! Eres una profesora increíble 🌱</div>
-                    <div class="dynamic-list" id="lista-clases"></div>
-                </div>
-            </section>
-
-            <!-- PROYECTOS -->
-            <section id="proyectos" class="module">
-                <div class="card">
-                    <h2 class="section-title">🌍 Proyectos Ambientales</h2>
-                    <form id="form-proyectos">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Nombre del Proyecto</label>
-                                <input type="text" id="proj-nombre" placeholder="Ej. Huerta Escolar Sustentable"
-                                    required>
-                            </div>
-                            <div class="form-group">
-                                <label>Semanas de Seguimiento</label>
-                                <input type="number" id="proj-sem" value="4" min="1" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Estado</label>
-                                <select id="proj-est">
-                                    <option value="progreso">En progreso</option>
-                                    <option value="completado">Completado</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn">🌱 Agregar Proyecto</button>
-                    </form>
-                    <div class="dynamic-list" id="lista-proyectos"></div>
-                </div>
-            </section>
-
-            <!-- EXPERIMENTOS -->
-            <section id="experimentos" class="module">
-                <div class="card">
-                    <h2 class="section-title">🔬 Gestión de Experimentos</h2>
-                    <form id="form-experimentos">
-                        <div class="form-row">
-                            <div class="form-group" style="flex: 100%;">
-                                <label>Nombre del Experimento</label>
-                                <input type="text" id="exp-nombre" placeholder="Ej. Germinación en diferentes sustratos"
-                                    required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Materiales</label>
-                                <textarea id="exp-mat" rows="2" placeholder="Semillas, algodón, tierra, frascos..."
-                                    required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Resultado Esperado</label>
-                                <textarea id="exp-res" rows="2"
-                                    placeholder="Comparar el crecimiento a los 7 días..."></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Observaciones o Precauciones</label>
-                            <input type="text" id="exp-obs" placeholder="Mantener cerca de la luz solar...">
-                        </div>
-                        <button type="submit" class="btn">🔬 Guardar Experimento</button>
-                    </form>
-                    <div class="dynamic-list" id="lista-experimentos"></div>
-                </div>
-            </section>
-
-            <!-- HORARIO -->
-            <section id="horario" class="module">
-                <div class="card">
-                    <h2 class="section-title">⏰ Horario Semanal</h2>
-                    <form id="form-horario">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Hora de Inicio</label>
-                                <input type="time" id="hora-inicio" value="07:00" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Hora de Fin</label>
-                                <input type="time" id="hora-fin" value="13:00" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Duración (minutos)</label>
-                                <input type="number" id="hora-duracion" value="60" step="15" min="15" required>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn">Generar Estructura</button>
-                    </form>
-
-                    <div class="table-responsive">
-                        <table class="schedule-table">
-                            <thead>
-                                <tr>
-                                    <th>Hora</th>
-                                    <th>Lunes</th>
-                                    <th>Martes</th>
-                                    <th>Miércoles</th>
-                                    <th>Jueves</th>
-                                    <th>Viernes</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody-horario"></tbody>
-                        </table>
-                    </div>
-                    <div style="margin-top: 20px; text-align: right;">
-                        <button id="btn-guardar-horario" class="btn" style="display: none;">💾 Guardar Horario</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ESTUDIANTES -->
-            <section id="estudiantes" class="module">
-                <div class="card">
-                    <h2 class="section-title">👥 Lista de Estudiantes</h2>
-                    <form id="form-estudiantes">
-                        <div class="form-group">
-                            <label>Nombre del Estudiante</label>
-                            <input type="text" id="est-nombre" placeholder="Ej. Juan Pérez" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Observaciones (Participación, tareas...)</label>
-                            <textarea id="est-obs" rows="2"
-                                placeholder="Participa mucho en actividades de campo..."></textarea>
-                        </div>
-                        <button type="submit" class="btn">➕ Agregar Estudiante</button>
-                    </form>
-                    <div class="dynamic-list" id="lista-estudiantes"></div>
-                </div>
-            </section>
-
-            <!-- RESPALDO -->
-            <section id="respaldo" class="module">
-                <div class="card">
-                    <h2 class="section-title">💾 Copia de Seguridad</h2>
-                    <p style="margin-bottom: 20px; line-height: 1.6; color: #555;">
-                        Toda tu información se guarda de forma segura en este navegador. Para evitar perderla si limpias
-                        el historial o cambias de computadora, puedes descargar una copia de seguridad.
-                    </p>
-                    <div class="form-row" style="gap: 15px;">
-                        <button id="btn-exportar" class="btn"
-                            style="background: linear-gradient(135deg, #4b6cb7, #182848);">
-                            ⬇️ Descargar Copia
-                        </button>
-
-                        <label for="input-importar" class="btn"
-                            style="background: linear-gradient(135deg, #ff9966, #ff5e62); cursor: pointer; margin: 0;">
-                            ⬆️ Restaurar Copia
-                        </label>
-                        <input type="file" id="input-importar" accept=".json" style="display: none;">
-                    </div>
-                </div>
-            </section>
-
-            <footer>Enseñar es sembrar conocimiento en el mundo 🌍</footer>
-        </main>
-    </div>
-
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
 </body>
 
 </html>
